@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -53,24 +55,14 @@ void push_sorted_by_surname(Node** head, Node** tail, Book* _book) {
 
 	// finding after which element is new to be pushed
 	Node* curr = *head;
-<<<<<<< HEAD
 	while (1) {
-=======
-	if (strcmp(curr->book->author->surname, newNode->book->author->surname) > 0) {
-		newNode->next = curr;
-		newNode->prev = NULL;
-		curr->prev = newNode;
-		*head = newNode;
-		return;
-	}
-	while (1){
->>>>>>> update
 		if (curr) {
 			if (strcmp(curr->book->author->surname, newNode->book->author->surname) > 0 || !curr->next) {
 				break;
 			}
 		}
-		curr = curr->next;
+		if (curr)
+			curr = curr->next;
 	}
 
 	newNode->next = curr->next;
@@ -78,12 +70,9 @@ void push_sorted_by_surname(Node** head, Node** tail, Book* _book) {
 	if (curr->next) {
 		curr->next->prev = newNode;
 	}
-<<<<<<< HEAD
-=======
 	else {
 		*tail = newNode;
 	}
->>>>>>> update
 	curr->next = newNode;
 }
 
@@ -91,16 +80,22 @@ void get_books(Node** head, Node** tail) {
 	FILE* source;
 	fopen_s(&source, "source.txt", "r");
 
+	if (!source) {
+		return;
+	}
 	while (!feof(source)) {
 		Book* new_book = (Book*)malloc(sizeof(Book));
-		new_book->author = (Author*)malloc(sizeof(Author));
-		new_book->author->name = (char*)malloc(35);
-		new_book->author->surname = (char*)malloc(35);
+		if (new_book) {
+			new_book->author = (Author*)malloc(sizeof(Author));
+			new_book->author->name = (char*)malloc(35);
+			new_book->author->surname = (char*)malloc(35);
+			new_book->title = (char*)malloc(35);
+		}
 
-		fscanf_s(source, "%s %s %s %d %d %d", new_book->author->name, \
-			new_book->author->surname, new_book->title, &new_book->year, \
+		fscanf(source, "%s %s %s %d %d %d", new_book->author->name,\
+			new_book->author->surname,  new_book->title, &new_book->year, \
 			&new_book->pages, &new_book->cost);
-		push_back(&head, &tail, new_book);
+		push_back(head, tail, new_book);
 	}
 	fclose(source);
 }
