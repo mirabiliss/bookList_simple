@@ -1,0 +1,10 @@
+Charlotte Bronte Jane_Eyre 1847 347 525
+Stephen King It 1986 642 328
+Scott Fitzgerald The_Great_Gatsby 1894 44 247
+J.K. Rowling Harry_Potter 1995 438 256
+J.R.R. Tolkien The_Hobbit 1987 564 189
+Ray Bradbury Fahrenheit_451 1996 35 150
+Jane Austen Pride_and_Prejudice 1879 345 148
+Aldous Huxley Brave_new_world 1984 426 231
+George Orwell Animal_Farm 1897 43 136
+Markus Zusak The_book_thief 1983 123 456
