@@ -140,6 +140,7 @@ void displayBook(Book* book) {
 	if (book) {
 		printf("%s %s: '%s' %dy. %dp. %d$\n", book->author->name, book->author->surname, \
 			book->title, book->year, book->pages, book->cost);
+		printf("--------------------------------------------------------\n");
 	}
 }
 

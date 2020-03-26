@@ -6,6 +6,7 @@
 
 int main(void) {
 	Node* head = NULL, * tail = NULL;
+
 	char c = '*';
 
 	while (1) {
@@ -18,6 +19,7 @@ int main(void) {
  				\n- to sort list by books' numbers of pages, press 'p' \
 				\n- to sort list by books' prices, press 'c' \
 				\n- to display the list to output file, press 'd'\
+				\n- to find books of certain author, press 'f'\
 				\n- to exit, press 'e'\n\n");
 		c = getchar();
 		switch (c) {
@@ -48,6 +50,9 @@ int main(void) {
 		case 'd':
 			displayList(&head);
 			break;
+		case 'f':
+			find_book(&head);
+			break;
 		case 'e':
 			exit(0);
 		default:
@@ -56,7 +61,7 @@ int main(void) {
 		}
 	}
 
-
-
 	return 0;
 }
+
+// delete all books with pages < 50

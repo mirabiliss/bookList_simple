@@ -28,3 +28,5 @@ void bubble_sort_by_year(Node** head);
 void bubble_sort_by_pages(Node** head);
 
 void bubble_sort_by_cost(Node** head);
+
+void find_book(Node** head);

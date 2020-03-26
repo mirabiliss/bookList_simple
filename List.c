@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "Node.h"
 
 // initialises list with an element and makes head & tail point to it
@@ -269,6 +270,33 @@ void bubble_sort_by_cost(Node** head) {
 				jptr->book = tmp;
 			}
 		}
+	}
+}
+
+void find_book(Node** head) {
+	char* to_find = (char*)malloc(256);
+	if (!to_find) {
+		return;
+	}
+
+	printf("enter surname of the author, whose books you want to find: ");
+	scanf("%s", to_find);
+	int it = 0, bool = 0;
+	while (to_find[it]) {
+		to_find[it] = tolower(to_find[it]);
+	}
+	Node* curr = *head;
+	printf("\n");
+
+	while (curr != NULL) {
+		if (strstr(curr->book->author->surname, to_find)) {
+			bool = 1;
+			displayBook(curr->book);
+		}
+		curr = curr->next;
+	}
+	if (!bool) {
+		printf("no books of this author were found.\n");
 	}
 }
 
