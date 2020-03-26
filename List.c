@@ -273,6 +273,9 @@ void bubble_sort_by_cost(Node** head) {
 	}
 }
 
+// finds matching the input 'to_find' string occurrences 
+//	in the authors' surnames from the list and displays 
+//	books with those matches
 void find_book(Node** head) {
 	char* to_find = (char*)malloc(256);
 	if (!to_find) {
@@ -282,9 +285,6 @@ void find_book(Node** head) {
 	printf("enter surname of the author, whose books you want to find: ");
 	scanf("%s", to_find);
 	int it = 0, bool = 0;
-	while (to_find[it]) {
-		to_find[it] = tolower(to_find[it]);
-	}
 	Node* curr = *head;
 	printf("\n");
 
@@ -300,6 +300,58 @@ void find_book(Node** head) {
 	}
 }
 
-// choose what is to be done by clicking some characters
-// change cost of books of nodes
-// finish 'delete node'
+
+//void Edit(struct books* begin, int id, FILE* inp) {
+////задається початок руху по струтурі, номер шуканого елемента і файл
+//	struct books* curr = begin; //початок руку по структурі
+//
+//	for (int i = 1; i < id; i++)
+//	{
+//		curr = curr->next; //рух по струтурі
+//
+//		if (!curr)
+//		{
+//			printf("No such elem!\n");
+//			return;
+//		}
+//	}
+//	printf("|%10s |%10s  |    %4d|    %4d|    %6.2lf |\n", curr->author, curr->bookname, curr->year, curr->nop, curr->price);
+//	//FILE* fptr;
+//	//fptr = fopen("Text1.txt", "r");
+//
+//	printf("You want to edit:\n1 - Author\n2 - bookname\n3 - year\n");
+//	printf("4 - number of pages\n5 - price\n6 - cancel\n");
+//	char buffer[100];
+//	int buf = 0;
+//	double buf2 = 0;
+//	int choice = 0;
+//	scanf("%d", &choice); //зчитування вибору
+//
+//	if (choice == 6) return;
+//	getchar();
+//	printf("Enter new value: ");
+//	if (choice == 1) {           //перезапис у залежності від вибору
+//		fgets(buffer, 100, inp);
+//		strtok(buffer, "\n");
+//		scanf("%s", &buffer);
+//		strcpy(curr->author, buffer);
+//	}
+//	if (choice == 2) {
+//		scanf("%s", &buffer);
+//		strcpy(curr->bookname, buffer);
+//	}
+//	if (choice == 3) {
+//		scanf("%d", &buf);
+//		strcpy(curr->year, buf);
+//	}
+//	if (choice == 4) {
+//		scanf("%d", &buf);
+//		strcpy(curr->nop, buf);
+//	}
+//	if (choice == 5) {
+//		scanf("%lf", &buf2);
+//		//strcpy(curr->price; buf2 );
+//	}
+//	printf("|%10s |%10s  |    %4d|    %4d|    %6.2lf |\n", curr->author, curr->bookname, curr->year, curr->nop, curr->price);
+//
+//}

@@ -183,6 +183,3 @@ int is_valid_string(char* check) {
 	}
 	return res;
 }
-
-// delete node
-// find?

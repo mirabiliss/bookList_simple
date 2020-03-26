@@ -22,46 +22,48 @@ int main(void) {
 				\n- to find books of certain author, press 'f'\
 				\n- to exit, press 'e'\n\n");
 		c = getchar();
-		switch (c) {
-		case 'a':
+		getchar();
+
+		if (c == 'a' || c == 'A') {
 			get_books(&head, &tail);
-			break;
-		case 'm':
+		}
+		else if (c == 'm' || c == 'M') {
 			get_book_from_console(&head, &tail);
-			break;
-		case 'n':
+		}
+		else if (c == 'n' || c == 'N') {
 			bubble_sort_by_name(&head);
-			break;
-		case 's':
+		}
+		else if (c == 's' || c == 'S') {
 			bubble_sort_by_surname(&head);
-			break;
-		case 't':
+		}
+		else if (c == 't' || c == 'T') {
 			bubble_sort_by_title(&head);
-			break;
-		case 'y':
+		}
+		else if (c == 'y' || c == 'Y') {
 			bubble_sort_by_year(&head);
-			break;
-		case 'p':
+		}
+		else if (c == 'p' || c == 'P') {
 			bubble_sort_by_pages(&head);
-			break;
-		case 'c':
+		}
+		else if (c == 'c' || c == 'C') {
 			bubble_sort_by_cost(&head);
-			break;
-		case 'd':
+		}
+		else if (c == 'd' || c == 'D') {
 			displayList(&head);
-			break;
-		case 'f':
+		}
+		else if (c == 'f' || c == 'F') {
 			find_book(&head);
-			break;
-		case 'e':
+		}
+		else if (c == 'r' || c == 'R') {
+			// edit_book()
+		}
+		else if (c == 'e' || c == 'E') {
 			exit(0);
-		default:
+		}
+		else {
 			printf("something went wrong. try again.\n\n");
-			break;
 		}
 	}
 
 	return 0;
 }
-
-// delete all books with pages < 50
