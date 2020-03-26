@@ -21,6 +21,7 @@ typedef struct Node {
 	struct Node* next;
 } Node;
 
+int is_valid_string(char* check);
 
 void setName(Author* a);
 

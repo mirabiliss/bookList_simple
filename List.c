@@ -76,6 +76,7 @@ void push_sorted_by_surname(Node** head, Node** tail, Book* _book) {
 	curr->next = newNode;
 }
 
+// reads and adds all books from source file to the list
 void get_books(Node** head, Node** tail) {
 	FILE* source;
 	fopen_s(&source, "source.txt", "r");
@@ -90,14 +91,54 @@ void get_books(Node** head, Node** tail) {
 			new_book->author->name = (char*)malloc(35);
 			new_book->author->surname = (char*)malloc(35);
 			new_book->title = (char*)malloc(35);
-		}
 
-		fscanf(source, "%s %s %s %d %d %d", new_book->author->name,\
-			new_book->author->surname,  new_book->title, &new_book->year, \
-			&new_book->pages, &new_book->cost);
-		push_back(head, tail, new_book);
+			fscanf(source, "%s %s %s %d %d %d", new_book->author->name, \
+				new_book->author->surname, new_book->title, &new_book->year, \
+				&new_book->pages, &new_book->cost);
+			push_back(head, tail, new_book);
+		}
 	}
 	fclose(source);
+}
+
+// scans data about book from console and addes it at the end of the list
+void get_book_from_console(Node** head, Node** tail) {
+	Book* new_book = (Book*)malloc(sizeof(Book));
+	if (new_book) {
+		new_book->author = (Author*)malloc(sizeof(Author));
+		new_book->author->name = (char*)malloc(35);
+		new_book->author->surname = (char*)malloc(35);
+		new_book->title = (char*)malloc(256);
+
+		printf("- Enter author's name and surname, \
+				\n- then title of the book, \
+				\n- year of it's publishment, \
+				\n- number of pages and price. In given order. \
+				\nIf name, surname or title contain more than one word - \
+enter them by separating with '_' or '-' if needed.\n");
+
+		scanf("%s %s %s %d %d %d", new_book->author->name, \
+			new_book->author->surname, new_book->title, &new_book->year, \
+			& new_book->pages, &new_book->cost);
+
+		//printf("enter author's name: ");
+		//setName(new_book->author); 
+		//printf("enter author's surname: ");
+		//setSurname(new_book->author);
+		//printf("enter book's title: ");
+		//setTitle(new_book);
+		//printf("enter book's year of publishment: ");
+		//setYear(new_book);
+		//printf("enter number of book's pages: ");
+		//setPages(new_book);
+		//printf("enter book's price: ");
+		//setCost(new_book);
+
+		push_back(head, tail, new_book);
+	}
+	else {
+		printf("error allocating memory.\n");
+	}
 }
 
 // displays the list to output file
@@ -108,7 +149,8 @@ void displayList(Node** head) {
 	Node* it = *head;
 	while (it) {
 		fprintf(output, "%s %s: '%s' %dy. %dp. %d$\n", it->book->author->name, it->book->author->surname, \
-				it->book->title, it->book->year, it->book->pages, it->book->cost);
+			it->book->title, it->book->year, it->book->pages, it->book->cost);
+		fprintf(output, "--------------------------------------------------------\n");
 		it = it->next;
 	}
 
@@ -127,8 +169,7 @@ void swap_books(Book** first, Book** second) {
 	*second = tmp;
 }
 
-// sorts list by authors' surnames in alphabet order (has to)
-// same *head problem 
+// sorts list by authors' surnames in alphabet order 
 void bubble_sort_by_surname(Node** head) {
 	if (!(*head)) {
 		exit(2);
@@ -137,22 +178,89 @@ void bubble_sort_by_surname(Node** head) {
 	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
 		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
 			if (strcmp(iptr->book->author->surname, jptr->book->author->surname) > 0) {
-				//swap_books(&iptr->book, &iptr->next->book);
 				Book* tmp = iptr->book;
 				iptr->book = jptr->book;
 				jptr->book = tmp;
 			}
 		}
 	}
-
 }
+
+// sorts list by authors' names in alphabet order 
+void bubble_sort_by_name(Node** head) {
+	if (!(*head)) {
+		exit(2);
+	}
+
+	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
+		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
+			if (strcmp(iptr->book->author->name, jptr->book->author->name) > 0) {
+				Book* tmp = iptr->book;
+				iptr->book = jptr->book;
+				jptr->book = tmp;
+			}
+		}
+	}
+}
+
+// sorts list by books' titles in alphabet order 
+void bubble_sort_by_title(Node** head) {
+	if (!(*head)) {
+		exit(2);
+	}
+
+	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
+		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
+			if (strcmp(iptr->book->title, jptr->book->title) > 0) {
+				Book* tmp = iptr->book;
+				iptr->book = jptr->book;
+				jptr->book = tmp;
+			}
+		}
+	}
+}
+
+// sorts list by books' year of publishment
+void bubble_sort_by_year(Node** head) {
+	if (!(*head)) {
+		exit(2);
+	}
+
+	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
+		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
+			if ((iptr->book->year) > (iptr->next->book->year)) {
+				Book* tmp = iptr->book;
+				iptr->book = jptr->book;
+				jptr->book = tmp;
+			}
+		}
+	}
+}
+
+// sorts list by number of books' pages
+void bubble_sort_by_pages(Node** head) {
+	if (!(*head)) {
+		exit(2);
+	}
+
+	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
+		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
+			if ((iptr->book->pages) > (iptr->next->book->pages)) {
+				Book* tmp = iptr->book;
+				iptr->book = jptr->book;
+				jptr->book = tmp;
+			}
+		}
+	}
+}
+
 
 // sorts list by increasing of books' cost
 void bubble_sort_by_cost(Node** head) {
 	if (!(*head)) {
 		exit(2);
 	}
-	
+
 	for (Node* iptr = *head; iptr->next != NULL; iptr = iptr->next) {
 		for (Node* jptr = iptr->next; jptr != NULL; jptr = jptr->next) {
 			if ((iptr->book->cost) > (iptr->next->book->cost)) {
@@ -162,11 +270,8 @@ void bubble_sort_by_cost(Node** head) {
 			}
 		}
 	}
-
 }
 
-// sort by surname, year, pages, title
 // choose what is to be done by clicking some characters
-// reading from a file
 // change cost of books of nodes
 // finish 'delete node'

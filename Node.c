@@ -1,29 +1,30 @@
 #include "Node.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
-// Author
 void setName(Author* a) {
 	char* _name = "";
-	scanf_s("%s", _name);
+	scanf_s("%s", _name, 256);
 	a->name = _name;
 }
 
 void setSurname(Author* a) {
 	char* _surname = "";
-	scanf_s("%s", _surname);
+	scanf_s("%s", _surname, 256);
 	a->surname = _surname;
 }
 
-// Book
+
+
 void setAuthor(Book* book) {
 	setName(book->author);
 
 	// check if valid
-	if (book->author->name == "" || !(isalpha(book->author->name))) {
+	if (book->author->name == "" || !(is_valid_string(book->author->name))) {
 		printf("Invalid value assigned to 'name'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c =='R') {
 			setName(book->author);
 		}
 		else {
@@ -33,10 +34,10 @@ void setAuthor(Book* book) {
 
 	setSurname(book->author);
 	// check if valid
-	if (book->author->surname == "" || !(isalpha(book->author->surname))) {
+	if (book->author->surname == "" || !(is_valid_string(book->author->surname))) {
 		printf("Invalid value assigned to 'surname'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c == 'R') {
 			setSurname(book->author);
 		}
 		else {
@@ -46,15 +47,15 @@ void setAuthor(Book* book) {
 }
 
 void setTitle(Book* book) {
-	char* _title = "";
-	scanf_s("%s", _title);
+	char* _title = (char*)malloc(256);
+	scanf_s("%s", _title, 256);
 	book->title = _title;
 
 	// check if valid
-	if (book->title == "" /* || !(isalpha(book->title))*/) {
+	if (book->title == ""  || !(is_valid_string(book->title))) {
 		printf("Invalid value assigned to 'title'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c == 'R') {
 			setTitle(book);
 		}
 		else {
@@ -73,7 +74,7 @@ void setYear(Book* book) {
 	if (book->year > 2020 || !(isdigit(book->year))) {
 		printf("Invalid value assigned to 'year'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c == 'R') {
 			setYear(book);
 		}
 		else {
@@ -92,7 +93,7 @@ void setPages(Book* book) {
 	if (book->pages <= 0 || !(isdigit(book->pages))) {
 		printf("Invalid value assigned to 'pages'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c == 'R') {
 			setPages(book);
 		}
 		else {
@@ -110,7 +111,7 @@ void setCost(Book* book) {
 	if (book->cost < 0 || !(isdigit(book->cost))) {
 		printf("Invalid value assigned to 'cost'. You may rewrite it (press 'r') or exit and delete this book: ");
 		char c = getchar();
-		if (c == ('r' || 'R')) {
+		if (c == 'r' || c == 'R') {
 			setCost(book);
 		}
 		else {
@@ -121,27 +122,21 @@ void setCost(Book* book) {
 
 
 void deleteBook(Book* book) {
-	if (book->author) {
-		free(book->author);
-	}
-	if(book->title) {
+	if (book->title) {
 		free(book->title);
 	}
-	if (book->year) {
-		free(book->year);
-	}
-	if (book->pages) {
-		free(book->pages);
-	}
-	if (book->cost) {
-		free(book->cost);
+	if (book->author) {
+		free(book->author->name);
+		free(book->author->surname);
+		free(book->author);
 	}
 	if (book) {
 		free(book);
 	}
 }
 
-void displayBook(Book* book){
+// displays all book's information to the console
+void displayBook(Book* book) {
 	if (book) {
 		printf("%s %s: '%s' %dy. %dp. %d$\n", book->author->name, book->author->surname, \
 			book->title, book->year, book->pages, book->cost);
@@ -149,7 +144,6 @@ void displayBook(Book* book){
 }
 
 
-// Node
 
 // deletes node from the list
 void deleteNode(Node** head, Node** tail, Node* toDelete) {
@@ -171,3 +165,23 @@ void deleteNode(Node** head, Node** tail, Node* toDelete) {
 	// else if in the middle
 
 }
+
+int is_valid_string(char* check) {
+	int i = 0, res = 0;
+	if (!check[i]) {
+		return 0;
+	}
+	while (check[i]) {
+		if ((isalpha(check[i])) || ((check[i] == '-') || (check[i] == '_'))) {
+			res = 1;
+		}
+		else {
+			return 0;
+		}
+		i++;
+	}
+	return res;
+}
+
+// delete node
+// find?
